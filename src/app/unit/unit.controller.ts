@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UnitService } from './unit.service';
@@ -15,6 +16,7 @@ import {
   UnitResponseDTO,
   UnitUpdateRequestDTO,
 } from './dtos';
+import { AuthGuard } from '../auth/auth.guard';
 
 @ApiTags('Unit')
 @ApiBearerAuth()
@@ -36,11 +38,13 @@ export class UnitController {
   }
 
   @Get()
+  @UseGuards(AuthGuard)
   listAll(): Promise<UnitResponseDTO[]> {
     return this.unitService.listAll();
   }
 
   @Get(':id/questions')
+  @UseGuards(AuthGuard)
   listQuestions(@Param('id') id: string): Promise<UnitQuestionResponseDTO[]> {
     return this.unitService.listQuestions(id);
   }
