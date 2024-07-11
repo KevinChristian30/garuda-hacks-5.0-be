@@ -21,7 +21,7 @@ export default class UserMapper {
   static userToMeResponseDTO(user: any): AuthMeResponseDTO {
     return {
       id: user.secureId,
-      username: user.username
+      username: user.username,
     };
   }
 }
