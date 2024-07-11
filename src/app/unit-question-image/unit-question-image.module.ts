@@ -7,5 +7,6 @@ import { UnitQuestionImageService } from './unit-question-image.service';
   imports: [PrismaModule],
   controllers: [UnitQuestionImageController],
   providers: [UnitQuestionImageService],
+  exports: [UnitQuestionImageService],
 })
 export class UnitQuestionImageModule {}

@@ -9,15 +9,54 @@ import {
 } from './dtos';
 import { PrismaService } from 'src/prisma/prisma.service';
 import UnitMapper from './mapper/unit.mapper';
+import { UnitQuestionImageService } from '../unit-question-image/unit-question-image.service';
+import {
+  getRandomLetter,
+  getRandomUnitQuestionImage,
+} from 'src/helper/question';
+import { UnitQuestionTextService } from '../unit-question-text/unit-question-text.service';
 
 @Injectable()
 export class UnitService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private unitQuestionImageService: UnitQuestionImageService,
+    private unitQuestionTextService: UnitQuestionTextService,
+  ) {}
 
   async create(dto: UnitCreateRequestDTO): Promise<void> {
     await this.prisma.unit.create({
       data: UnitMapper.unitCreateRequestDTOToUnitCreateInput(dto),
     });
+  }
+
+  async generateQuestions(unitId: string): Promise<void> {
+    const unit = await this.prisma.unit.findFirstOrThrow({
+      where: {
+        secureId: unitId,
+      },
+      include: {
+        unitQuestionImages: true,
+      },
+    });
+
+    const lastIndex = unit.unitQuestionImages.length;
+    for (let i = 0; i <= 8; i += 2) {
+      const unitQuestionImage = getRandomUnitQuestionImage();
+      await this.unitQuestionImageService.create({
+        questionAnswer: unitQuestionImage.character,
+        questionImage: unitQuestionImage.imageUrl,
+        questionOrder: lastIndex + i,
+        unitId,
+      });
+
+      const unitQuestionText = getRandomLetter();
+      await this.unitQuestionTextService.create({
+        questionOrder: lastIndex + i + 1,
+        questionText: unitQuestionText,
+        unitId,
+      });
+    }
   }
 
   async update(secureId: string, dto: UnitUpdateRequestDTO): Promise<void> {

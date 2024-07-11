@@ -29,6 +29,11 @@ export class UnitController {
     return this.unitService.create(dto);
   }
 
+  @Post(':id/questions')
+  generateQuestions(@Param('id') id: string): Promise<void> {
+    return this.unitService.generateQuestions(id);
+  }
+
   @Put(':id')
   update(
     @Param('id') id: string,
