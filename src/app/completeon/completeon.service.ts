@@ -30,4 +30,21 @@ export class CompleteonService {
       },
     });
   }
+
+  async listByUser(userId: string): Promise<string[]> {
+    const user = await this.prisma.user.findFirstOrThrow({
+      where: {
+        secureId: userId,
+      },
+      include: {
+        completeons: {
+          include: {
+            unit: true,
+          },
+        },
+      },
+    });
+
+    return user.completeons.flatMap((completeon) => completeon.unit.secureId);
+  }
 }
