@@ -8,8 +8,8 @@ import {
 export default class UnitQuestionImageMapper {
   static unitQuestionImageCreateRequestDTOToUnitQuestionImageCreateInput(
     dto: UnitQuestionImageCreateRequestDTO,
-    unit: Prisma.unitsCreateNestedOneWithoutUnitquestionImagesInput,
-  ): Prisma.unitQuestionImagesCreateInput {
+    unit: Prisma.UnitCreateNestedOneWithoutUnitquestionImagesInput,
+  ): Prisma.UnitQuestionImageCreateInput {
     return {
       secureId: v4(),
       questionAnswer: dto.questionAnswer,
@@ -21,7 +21,7 @@ export default class UnitQuestionImageMapper {
 
   static unitQuestionImageUpdateRequestDTOToUnitQuestionImageUpdateInput(
     dto: UnitQuestionImageUpdateRequestDTO,
-  ): Prisma.unitQuestionImagesUpdateInput {
+  ): Prisma.UnitQuestionImageUpdateInput {
     return {
       questionAnswer: dto.questionAnswer,
       questionImage: dto.questionImage,

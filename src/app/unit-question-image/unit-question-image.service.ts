@@ -11,13 +11,13 @@ export class UnitQuestionImageService {
   constructor(private prisma: PrismaService) {}
 
   async create(dto: UnitQuestionImageCreateRequestDTO): Promise<void> {
-    const unit = await this.prisma.units.findFirstOrThrow({
+    const unit = await this.prisma.unit.findFirstOrThrow({
       where: {
         secureId: dto.unitId,
       },
     });
 
-    await this.prisma.unitQuestionImages.create({
+    await this.prisma.unitQuestionImage.create({
       data: UnitQuestionImageMapper.unitQuestionImageCreateRequestDTOToUnitQuestionImageCreateInput(
         dto,
         {
@@ -31,7 +31,7 @@ export class UnitQuestionImageService {
     secureId: string,
     dto: UnitQuestionImageUpdateRequestDTO,
   ): Promise<void> {
-    await this.prisma.unitQuestionImages.update({
+    await this.prisma.unitQuestionImage.update({
       where: {
         secureId: secureId,
       },
@@ -42,7 +42,7 @@ export class UnitQuestionImageService {
   }
 
   async delete(secureId: string): Promise<void> {
-    await this.prisma.unitQuestionImages.delete({
+    await this.prisma.unitQuestionImage.delete({
       where: {
         secureId: secureId,
       },

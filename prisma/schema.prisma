@@ -13,22 +13,28 @@ model User {
   username String  @unique
   password String?
   mmr      Int
+
+  @@map("users")
 }
 
-model units {
-  id                 Int                  @id @default(autoincrement())
-  secureId           String               @unique
+model Unit {
+  id                 Int                 @id @default(autoincrement())
+  secureId           String              @unique
   unitOrder          Int
   name               String
-  unitquestionImages unitQuestionImages[]
+  unitquestionImages UnitQuestionImage[]
+
+  @@map("units")
 }
 
-model unitQuestionImages {
+model UnitQuestionImage {
   id             Int    @id @default(autoincrement())
   secureId       String @unique
-  unit           units  @relation(fields: [unitId], references: [id], onDelete: Cascade)
+  unit           Unit   @relation(fields: [unitId], references: [id], onDelete: Cascade)
   unitId         Int
   questionOrder  Int
   questionImage  String
   questionAnswer String
+
+  @@map("unitQuestionImages")
 }
