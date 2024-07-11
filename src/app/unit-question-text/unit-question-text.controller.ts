@@ -1,6 +1,9 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Param, Post, Put } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { UnitQuestionTextCreateRequestDTO } from './dtos';
+import {
+  UnitQuestionTextCreateRequestDTO,
+  UnitQuestionTextUpdateRequestDTO,
+} from './dtos';
 import { UnitQuestionTextService } from './unit-question-text.service';
 
 @ApiTags('Unit Question Text')
@@ -12,5 +15,13 @@ export class UnitQuestionTextController {
   @Post()
   create(@Body() dto: UnitQuestionTextCreateRequestDTO): Promise<void> {
     return this.unitQuestionTextService.create(dto);
+  }
+
+  @Put(':id')
+  update(
+    @Param('id') id: string,
+    @Body() dto: UnitQuestionTextUpdateRequestDTO,
+  ): Promise<void> {
+    return this.unitQuestionTextService.update(id, dto);
   }
 }

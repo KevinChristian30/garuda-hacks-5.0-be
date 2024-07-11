@@ -1,5 +1,8 @@
 import { Prisma } from '@prisma/client';
-import { UnitQuestionTextCreateRequestDTO } from '../dtos';
+import {
+  UnitQuestionTextCreateRequestDTO,
+  UnitQuestionTextUpdateRequestDTO,
+} from '../dtos';
 import { v4 } from 'uuid';
 
 export default class UnitQuestionTextMapper {
@@ -12,6 +15,15 @@ export default class UnitQuestionTextMapper {
       questionOrder: dto.questionOrder,
       questionText: dto.questionText,
       unit: unit,
+    };
+  }
+
+  static fromUnitQuestionTextUpdateRequestDTOToUnitQuestionTextUpdateInput(
+    dto: UnitQuestionTextUpdateRequestDTO,
+  ): Prisma.UnitQuestionTextUpdateInput {
+    return {
+      questionOrder: dto.questionOrder,
+      questionText: dto.questionText,
     };
   }
 }

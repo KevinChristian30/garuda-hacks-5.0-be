@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { UnitQuestionTextCreateRequestDTO } from './dtos';
+import {
+  UnitQuestionTextCreateRequestDTO,
+  UnitQuestionTextUpdateRequestDTO,
+} from './dtos';
 import UnitQuestionTextMapper from './mapper/unit-question-text.mapper';
 
 @Injectable()
@@ -20,6 +23,20 @@ export class UnitQuestionTextService {
         {
           connect: unit,
         },
+      ),
+    });
+  }
+
+  async update(
+    secureId: string,
+    dto: UnitQuestionTextUpdateRequestDTO,
+  ): Promise<void> {
+    await this.prisma.unitQuestionText.update({
+      where: {
+        secureId: secureId,
+      },
+      data: UnitQuestionTextMapper.fromUnitQuestionTextUpdateRequestDTOToUnitQuestionTextUpdateInput(
+        dto,
       ),
     });
   }
