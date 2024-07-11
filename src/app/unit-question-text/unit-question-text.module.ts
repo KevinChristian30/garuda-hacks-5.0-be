@@ -7,5 +7,6 @@ import { UnitQuestionTextService } from './unit-question-text.service';
   imports: [PrismaModule],
   controllers: [UnitQuestionTextController],
   providers: [UnitQuestionTextService],
+  exports: [UnitQuestionTextService],
 })
 export class UnitQuestionTextModule {}
