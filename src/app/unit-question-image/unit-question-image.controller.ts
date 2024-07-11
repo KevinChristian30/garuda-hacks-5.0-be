@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UnitQuestionImageService } from './unit-question-image.service';
-import { UnitQuestionImageCreateRequestDTO } from './dtos/unit-question-image-create-request.dto';
+import { UnitQuestionImageCreateRequestDTO } from './dtos';
 
 @ApiTags('Unit Question Image')
 @ApiBearerAuth()

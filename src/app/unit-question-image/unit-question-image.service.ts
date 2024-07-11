@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { UnitQuestionImageCreateRequestDTO } from './dtos/unit-question-image-create-request.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import UnitQuestionImageMapper from './mapper/unit-question-image.mapper';
+import { UnitQuestionImageCreateRequestDTO } from './dtos';
 
 @Injectable()
 export class UnitQuestionImageService {

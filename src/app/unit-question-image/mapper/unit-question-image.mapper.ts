@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client';
 import { v4 } from 'uuid';
-import { UnitQuestionImageCreateRequestDTO } from '../dtos/unit-question-image-create-request.dto';
+import { UnitQuestionImageCreateRequestDTO } from '../dtos';
 
 export default class UnitQuestionImageMapper {
   static unitQuestionImageCreateRequestDTOToUnitQuestionImageCreateInput(
