@@ -8,7 +8,7 @@ import {
 export default class UnitQuestionImageMapper {
   static unitQuestionImageCreateRequestDTOToUnitQuestionImageCreateInput(
     dto: UnitQuestionImageCreateRequestDTO,
-    unit: Prisma.UnitCreateNestedOneWithoutUnitquestionImagesInput,
+    unit: Prisma.UnitCreateNestedOneWithoutUnitQuestionImagesInput,
   ): Prisma.UnitQuestionImageCreateInput {
     return {
       secureId: v4(),
