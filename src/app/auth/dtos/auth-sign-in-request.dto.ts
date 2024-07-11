@@ -3,8 +3,8 @@ import { IsNotEmpty } from 'class-validator';
 
 export class AuthSignInRequestDTO {
   @IsNotEmpty()
-  @ApiProperty({ example: 'admin@gmail.com' })
-  email: string;
+  @ApiProperty({ example: 'admin' })
+  username: string;
 
   @IsNotEmpty()
   @ApiProperty({ example: 'admin' })
