@@ -14,9 +14,7 @@ function setupDocs(app: INestApplication) {
 }
 
 function setupCors(app: INestApplication) {
-  app.enableCors({
-    origin: ['*'],
-  });
+  app.enableCors();
 }
 
 async function bootstrap() {
@@ -26,6 +24,6 @@ async function bootstrap() {
   setupCors(app);
   setupDocs(app);
 
-  await app.listen(8000);
+  await app.listen(8080);
 }
 bootstrap();

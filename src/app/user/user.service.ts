@@ -40,7 +40,7 @@ export class UserService {
           users."secureId" as id,
           username,
           mmr,
-          cast(RANK() OVER (ORDER BY mmr DESC) as int8) AS rank
+          RANK() OVER (ORDER BY mmr DESC, users."secureId" ASC) AS rank
         FROM
           users
       )
