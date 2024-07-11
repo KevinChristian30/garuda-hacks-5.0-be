@@ -5,6 +5,7 @@ import { UserModule } from './app/user/user.module';
 import { UnitModule } from './app/unit/unit.module';
 import { UnitQuestionImageModule } from './app/unit-question-image/unit-question-image.module';
 import { UnitQuestionTextModule } from './app/unit-question-text/unit-question-text.module';
+import { CompleteonModule } from './app/completeon/completeon.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { UnitQuestionTextModule } from './app/unit-question-text/unit-question-t
     UnitModule,
     UnitQuestionImageModule,
     UnitQuestionTextModule,
+    CompleteonModule,
   ],
   controllers: [],
   providers: [],

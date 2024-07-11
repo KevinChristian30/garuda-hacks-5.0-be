@@ -8,11 +8,12 @@ datasource db {
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
-  secureId String  @unique
-  username String  @unique
-  password String?
-  mmr      Int
+  id          Int          @id @default(autoincrement())
+  secureId    String       @unique
+  username    String       @unique
+  password    String?
+  mmr         Int
+  completeons Completeon[]
 
   @@map("users")
 }
@@ -24,6 +25,7 @@ model Unit {
   name               String
   unitQuestionImages UnitQuestionImage[]
   unitQuestionTexts  UnitQuestionText[]
+  completeons        Completeon[]
 
   @@map("units")
 }
@@ -41,12 +43,22 @@ model UnitQuestionImage {
 }
 
 model UnitQuestionText {
-  id             Int    @id @default(autoincrement())
-  secureId       String @unique
-  unit           Unit   @relation(fields: [unitId], references: [id], onDelete: Cascade)
-  unitId         Int
-  questionOrder  Int
-  questionText String
+  id            Int    @id @default(autoincrement())
+  secureId      String @unique
+  unit          Unit   @relation(fields: [unitId], references: [id], onDelete: Cascade)
+  unitId        Int
+  questionOrder Int
+  questionText  String
 
   @@map("unitQuestionTexts")
+}
+
+model Completeon {
+  unitId Int
+  unit   Unit @relation(fields: [unitId], references: [id])
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  @@id([unitId, userId])
+  @@map("completeons")
 }
