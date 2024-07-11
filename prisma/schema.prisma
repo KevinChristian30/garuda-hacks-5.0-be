@@ -22,7 +22,8 @@ model Unit {
   secureId           String              @unique
   unitOrder          Int
   name               String
-  unitquestionImages UnitQuestionImage[]
+  unitQuestionImages UnitQuestionImage[]
+  unitQuestionTexts  UnitQuestionText[]
 
   @@map("units")
 }
@@ -37,4 +38,15 @@ model UnitQuestionImage {
   questionAnswer String
 
   @@map("unitQuestionImages")
+}
+
+model UnitQuestionText {
+  id             Int    @id @default(autoincrement())
+  secureId       String @unique
+  unit           Unit   @relation(fields: [unitId], references: [id], onDelete: Cascade)
+  unitId         Int
+  questionOrder  Int
+  questionText String
+
+  @@map("unitQuestionTexts")
 }

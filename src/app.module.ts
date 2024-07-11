@@ -4,6 +4,7 @@ import { AuthModule } from './app/auth/auth.module';
 import { UserModule } from './app/user/user.module';
 import { UnitModule } from './app/unit/unit.module';
 import { UnitQuestionImageModule } from './app/unit-question-image/unit-question-image.module';
+import { UnitQuestionTextModule } from './app/unit-question-text/unit-question-text.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { UnitQuestionImageModule } from './app/unit-question-image/unit-question
     UserModule,
     UnitModule,
     UnitQuestionImageModule,
+    UnitQuestionTextModule,
   ],
   controllers: [],
   providers: [],
