@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client';
 import { v4 } from 'uuid';
-import { UnitCreateRequestDTO } from '../dtos';
+import { UnitCreateRequestDTO, UnitUpdateRequestDTO } from '../dtos';
 
 export default class UnitMapper {
   static unitCreateRequestDTOToUnitCreateInput(
@@ -9,6 +9,15 @@ export default class UnitMapper {
     return {
       name: dto.name,
       secureId: v4(),
+      unitOrder: dto.unitOrder,
+    };
+  }
+
+  static unitUpdateRequestDTOToUnitUpdateInput(
+    dto: UnitUpdateRequestDTO,
+  ): Prisma.unitsUpdateInput {
+    return {
+      name: dto.name,
       unitOrder: dto.unitOrder,
     };
   }
