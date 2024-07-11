@@ -11,18 +11,17 @@ export default class UserMapper {
     const password = await bcrypt.hash(dto.password, 10);
 
     return {
-      email: dto.email,
-      name: dto.name,
+      username: dto.username,
       password: password,
       secureId: v4(),
+      mmr: 0,
     };
   }
 
   static userToMeResponseDTO(user: any): AuthMeResponseDTO {
     return {
       id: user.secureId,
-      name: user.name,
-      email: user.email,
+      username: user.username
     };
   }
 }

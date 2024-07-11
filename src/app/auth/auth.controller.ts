@@ -40,8 +40,19 @@ export class AuthController {
 
     return {
       id: sub.id,
-      email: sub.email,
-      name: sub.name,
+      username: sub.username,
     };
+  }
+
+  @Post('generate-guest')
+  generateGuest(): Promise<AuthTokenResponseDTO> {
+    return this.authService.generateGuest()
+  }
+
+  @Post('sign-up-guest')
+  @UseGuards(AuthGuard)
+  signUpGuest(@Request() request: any, @Body() dto: AuthSignUpRequestDTO): Promise<void> {
+    const sub = request.user.sub;
+    return this.authService.signUpGuest(dto, sub.id)
   }
 }
