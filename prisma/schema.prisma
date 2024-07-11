@@ -16,8 +16,19 @@ model User {
 }
 
 model units {
-  id        Int    @id @default(autoincrement())
-  secureId  String @unique
-  unitOrder Int
-  name      String
+  id                 Int                  @id @default(autoincrement())
+  secureId           String               @unique
+  unitOrder          Int
+  name               String
+  unitquestionImages unitQuestionImages[]
+}
+
+model unitQuestionImages {
+  id             Int    @id @default(autoincrement())
+  secureId       String @unique
+  unit           units  @relation(fields: [unitId], references: [id], onDelete: Cascade)
+  unitId         Int
+  questionOrder  Int
+  questionImage  String
+  questionAnswer String
 }
