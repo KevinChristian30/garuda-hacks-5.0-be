@@ -11,6 +11,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UnitService } from './unit.service';
 import {
   UnitCreateRequestDTO,
+  UnitQuestionResponseDTO,
   UnitResponseDTO,
   UnitUpdateRequestDTO,
 } from './dtos';
@@ -37,6 +38,11 @@ export class UnitController {
   @Get()
   listAll(): Promise<UnitResponseDTO[]> {
     return this.unitService.listAll();
+  }
+
+  @Get(':id/questions')
+  listQuestions(@Param('id') id: string): Promise<UnitQuestionResponseDTO[]> {
+    return this.unitService.listQuestions(id);
   }
 
   @Delete(':id')
