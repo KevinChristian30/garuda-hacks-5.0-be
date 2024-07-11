@@ -17,6 +17,9 @@ import Constants from 'src/constants';
 import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { v4 } from 'uuid';
+import generateRandomGuestUsername from 'src/helper';
+
 
 @Injectable()
 export class AuthService {
@@ -24,14 +27,14 @@ export class AuthService {
     private prisma: PrismaService,
     private userService: UserService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   async signUp(dto: AuthSignUpRequestDTO): Promise<void> {
-    const user = await this.userService.findUserByEmail(dto.email);
+    const user = await this.userService.findUserByUsername(dto.username);
 
     if (user) {
       throw new BadRequestException(
-        Constants.ErrorMessages.Auth.EMAIL_IS_ALREADY_TAKEN,
+        Constants.ErrorMessages.Auth.USERNAME_IS_ALREADY_TAKEN,
       );
     }
 
@@ -41,9 +44,9 @@ export class AuthService {
   }
 
   async signIn(dto: AuthSignInRequestDTO): Promise<AuthTokenResponseDTO> {
-    const user = await this.userService.findUserByEmail(dto.email);
+    const user = await this.userService.findUserByUsername(dto.username);
     if (!user) {
-      throw new NotFoundException(Constants.ErrorMessages.Auth.EMAIL_NOT_FOUND);
+      throw new NotFoundException(Constants.ErrorMessages.Auth.USERNAME_NOT_FOUND);
     }
 
     const passwordIsCorrect = await bcrypt.compare(dto.password, user.password);
@@ -58,5 +61,41 @@ export class AuthService {
         sub: UserMapper.userToMeResponseDTO(user),
       }),
     };
+  }
+
+  async generateGuest(): Promise<AuthTokenResponseDTO> {
+    const user = await this.prisma.user.create({
+      data: {
+        secureId: v4(),
+        username: generateRandomGuestUsername(),
+        password: null,
+        mmr: 0,
+      }
+    });
+
+    return {
+      access_token: await this.jwtService.signAsync({
+        sub: UserMapper.userToMeResponseDTO(user),
+      }),
+    };
+  }
+
+  async signUpGuest(dto: AuthSignUpRequestDTO, userId: string): Promise<void> {
+    const uniqueUser = await this.userService.findUserByUsername(dto.username);
+
+    if (uniqueUser) {
+      throw new BadRequestException(
+        Constants.ErrorMessages.Auth.USERNAME_IS_ALREADY_TAKEN,
+      );
+    }
+
+    const data: Prisma.UserCreateInput =
+      await UserMapper.authSignUpRequestDTOToUserCreateInput(dto);
+    await this.prisma.user.update({
+      where: {
+        secureId: userId,
+      },
+      data
+    });
   }
 }
