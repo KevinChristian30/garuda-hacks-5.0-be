@@ -1,7 +1,11 @@
-import { Body, Controller, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UnitService } from './unit.service';
-import { UnitCreateRequestDTO, UnitUpdateRequestDTO } from './dtos';
+import {
+  UnitCreateRequestDTO,
+  UnitResponseDTO,
+  UnitUpdateRequestDTO,
+} from './dtos';
 
 @ApiTags('Unit')
 @ApiBearerAuth()
@@ -20,5 +24,10 @@ export class UnitController {
     @Body() dto: UnitUpdateRequestDTO,
   ): Promise<void> {
     return this.unitService.update(id, dto);
+  }
+
+  @Get()
+  listAll(): Promise<UnitResponseDTO[]> {
+    return this.unitService.listAll();
   }
 }
