@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Param, Post, Put } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import {
   UnitQuestionTextCreateRequestDTO,
@@ -23,5 +23,10 @@ export class UnitQuestionTextController {
     @Body() dto: UnitQuestionTextUpdateRequestDTO,
   ): Promise<void> {
     return this.unitQuestionTextService.update(id, dto);
+  }
+
+  @Delete(':id')
+  delete(@Param('id') id: string): Promise<void> {
+    return this.unitQuestionTextService.delete(id);
   }
 }
