@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import UnitQuestionImageMapper from './mapper/unit-question-image.mapper';
-import { UnitQuestionImageCreateRequestDTO } from './dtos';
+import {
+  UnitQuestionImageCreateRequestDTO,
+  UnitQuestionImageUpdateRequestDTO,
+} from './dtos';
 
 @Injectable()
 export class UnitQuestionImageService {
@@ -20,6 +23,20 @@ export class UnitQuestionImageService {
         {
           connect: unit,
         },
+      ),
+    });
+  }
+
+  async update(
+    secureId: string,
+    dto: UnitQuestionImageUpdateRequestDTO,
+  ): Promise<void> {
+    await this.prisma.unitQuestionImages.update({
+      where: {
+        secureId: secureId,
+      },
+      data: UnitQuestionImageMapper.unitQuestionImageUpdateRequestDTOToUnitQuestionImageUpdateInput(
+        dto,
       ),
     });
   }
