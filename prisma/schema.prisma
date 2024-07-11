@@ -26,7 +26,7 @@ model units {
 model unitQuestionImages {
   id             Int    @id @default(autoincrement())
   secureId       String @unique
-  unit           units  @relation(fields: [unitId], references: [id])
+  unit           units  @relation(fields: [unitId], references: [id], onDelete: Cascade)
   unitId         Int
   questionOrder  Int
   questionImage  String
