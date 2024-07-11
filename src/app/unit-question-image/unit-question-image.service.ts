@@ -40,4 +40,12 @@ export class UnitQuestionImageService {
       ),
     });
   }
+
+  async delete(secureId: string): Promise<void> {
+    await this.prisma.unitQuestionImages.delete({
+      where: {
+        secureId: secureId,
+      },
+    });
+  }
 }
