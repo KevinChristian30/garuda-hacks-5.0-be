@@ -33,4 +33,12 @@ export class UnitService {
         unitOrder: unit.unitOrder,
       }));
   }
+
+  async delete(secureId: string): Promise<void> {
+    await this.prisma.units.delete({
+      where: {
+        secureId: secureId,
+      },
+    });
+  }
 }

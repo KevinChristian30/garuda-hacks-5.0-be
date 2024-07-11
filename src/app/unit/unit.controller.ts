@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UnitService } from './unit.service';
 import {
@@ -29,5 +37,10 @@ export class UnitController {
   @Get()
   listAll(): Promise<UnitResponseDTO[]> {
     return this.unitService.listAll();
+  }
+
+  @Delete(':id')
+  delete(@Param('id') id: string): Promise<void> {
+    return this.unitService.delete(id);
   }
 }
