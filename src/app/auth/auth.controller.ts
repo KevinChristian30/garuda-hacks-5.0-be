@@ -15,7 +15,6 @@ import {
   AuthTokenResponseDTO,
 } from './dtos';
 import { AuthGuard } from './auth.guard';
-import UserMapper from '../user/mapper/user.mapper';
 
 @ApiTags('Auth')
 @ApiBearerAuth()

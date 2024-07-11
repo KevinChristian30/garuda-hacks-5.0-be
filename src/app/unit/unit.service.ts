@@ -9,13 +9,13 @@ export class UnitService {
   constructor(private prisma: PrismaService) {}
 
   async create(dto: UnitCreateRequestDTO): Promise<void> {
-    await this.prisma.units.create({
+    await this.prisma.unit.create({
       data: UnitMapper.unitCreateRequestDTOToUnitCreateInput(dto),
     });
   }
 
   async update(secureId: string, dto: UnitUpdateRequestDTO): Promise<void> {
-    await this.prisma.units.update({
+    await this.prisma.unit.update({
       where: {
         secureId: secureId,
       },
@@ -24,7 +24,7 @@ export class UnitService {
   }
 
   async listAll(): Promise<UnitResponseDTO[]> {
-    const units = await this.prisma.units.findMany();
+    const units = await this.prisma.unit.findMany();
     return units
       .sort((a, b) => a.unitOrder - b.unitOrder)
       .map((unit) => ({
@@ -35,7 +35,7 @@ export class UnitService {
   }
 
   async delete(secureId: string): Promise<void> {
-    await this.prisma.units.delete({
+    await this.prisma.unit.delete({
       where: {
         secureId: secureId,
       },

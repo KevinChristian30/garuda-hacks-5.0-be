@@ -9,7 +9,7 @@ import {
 export default class UnitMapper {
   static unitCreateRequestDTOToUnitCreateInput(
     dto: UnitCreateRequestDTO,
-  ): Prisma.unitsCreateInput {
+  ): Prisma.UnitCreateInput {
     return {
       name: dto.name,
       secureId: v4(),
@@ -19,7 +19,7 @@ export default class UnitMapper {
 
   static unitUpdateRequestDTOToUnitUpdateInput(
     dto: UnitUpdateRequestDTO,
-  ): Prisma.unitsUpdateInput {
+  ): Prisma.UnitUpdateInput {
     return {
       name: dto.name,
       unitOrder: dto.unitOrder,
