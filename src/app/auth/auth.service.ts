@@ -5,7 +5,6 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import {
-  AuthMeResponseDTO,
   AuthSignInRequestDTO,
   AuthTokenResponseDTO,
 } from './dtos';
