@@ -15,12 +15,14 @@ import {
   AuthTokenResponseDTO,
 } from './dtos';
 import { AuthGuard } from './auth.guard';
+import { UserResponseDTO } from '../user/dtos';
+import { UserService } from '../user/user.service';
 
 @ApiTags('Auth')
 @ApiBearerAuth()
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private userService: UserService) { }
 
   @Post('sign-up')
   signUp(@Body() dto: AuthSignUpRequestDTO): Promise<void> {
@@ -34,13 +36,10 @@ export class AuthController {
 
   @Get('me')
   @UseGuards(AuthGuard)
-  me(@Request() request: any): AuthMeResponseDTO {
+  me(@Request() request: any): Promise<UserResponseDTO> {
     const sub = request.user.sub;
 
-    return {
-      id: sub.id,
-      username: sub.username,
-    };
+    return this.userService.me(sub.id)
   }
 
   @Post('generate-guest')

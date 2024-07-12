@@ -3,4 +3,6 @@ export interface UserRankResponseDTO {
   username: string;
   mmr: number;
   rank: number;
+  profilePicture: string | null;
+  type: string
 }

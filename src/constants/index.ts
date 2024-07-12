@@ -1,6 +1,6 @@
 const Constants = {
   Security: {
-    SECRET_KEY:
+    DEFAULT_SECRET_KEY:
       '1a854e81ee169fe2fd85478f56dfbe8040a551220b9f78683a586acaf21353f6',
   },
   ErrorMessages: {

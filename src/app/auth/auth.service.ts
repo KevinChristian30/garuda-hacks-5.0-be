@@ -14,7 +14,7 @@ import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { v4 } from 'uuid';
-import generateRandomGuestUsername from 'src/helper';
+import { generateGuestRandomUsername } from 'src/helper';
 
 @Injectable()
 export class AuthService {
@@ -22,7 +22,7 @@ export class AuthService {
     private prisma: PrismaService,
     private userService: UserService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   async signUp(dto: AuthSignUpRequestDTO): Promise<void> {
     const user = await this.userService.findUserByUsername(dto.username);
@@ -64,7 +64,7 @@ export class AuthService {
     const user = await this.prisma.user.create({
       data: {
         secureId: v4(),
-        username: generateRandomGuestUsername(),
+        username: generateGuestRandomUsername(),
         password: null,
         mmr: 0,
       },
@@ -95,4 +95,6 @@ export class AuthService {
       data,
     });
   }
+
+
 }
