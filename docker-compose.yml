@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  handy-be:
+    container_name: handy-be
+    image: localhost:5000/handy-backend:latest
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    networks:
+      - web
+      - database
+
+networks:
+  web:
+    external: true
+  database:
+    external: true
