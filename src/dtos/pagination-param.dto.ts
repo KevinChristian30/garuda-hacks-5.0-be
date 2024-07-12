@@ -34,7 +34,15 @@ export class PaginationParamDTO {
     return {
       skip: (this.pageNumber - 1) * this.perPage,
       take: this.perPage,
-      orderBy: orderBy,
+      orderBy: [
+        {
+          ...orderBy
+        },
+        {
+          id: 'asc'
+        }
+      ],
+
     };
   }
 }
