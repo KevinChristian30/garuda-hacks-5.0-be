@@ -8,11 +8,12 @@ datasource db {
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
-  secureId String  @unique
-  username String  @unique
-  password String?
-  mmr      Int
+  id               Int               @id @default(autoincrement())
+  secureId         String            @unique
+  username         String            @unique
+  password         String?
+  mmr              Int
+  gameParticipants GameParticipant[]
 }
 
 model units {
@@ -20,4 +21,27 @@ model units {
   secureId  String @unique
   unitOrder Int
   name      String
+}
+
+model Game {
+  id               Int               @id @default(autoincrement())
+  secureId         String            @unique
+  question         String
+  expired          BigInt
+  isMmrCalculated  Boolean
+  gameParticipants GameParticipant[]
+
+  @@map("games")
+}
+
+model GameParticipant {
+  game      Game  @relation(fields: [gameId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  gameId    Int
+  user      User  @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId    Int
+  successes Int[]
+  skips     Int[]
+
+  @@id([gameId, userId])
+  @@map("gameParticipants")
 }

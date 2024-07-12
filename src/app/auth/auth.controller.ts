@@ -46,13 +46,16 @@ export class AuthController {
 
   @Post('generate-guest')
   generateGuest(): Promise<AuthTokenResponseDTO> {
-    return this.authService.generateGuest()
+    return this.authService.generateGuest();
   }
 
   @Post('sign-up-guest')
   @UseGuards(AuthGuard)
-  signUpGuest(@Request() request: any, @Body() dto: AuthSignUpRequestDTO): Promise<void> {
+  signUpGuest(
+    @Request() request: any,
+    @Body() dto: AuthSignUpRequestDTO,
+  ): Promise<void> {
     const sub = request.user.sub;
-    return this.authService.signUpGuest(dto, sub.id)
+    return this.authService.signUpGuest(dto, sub.id);
   }
 }

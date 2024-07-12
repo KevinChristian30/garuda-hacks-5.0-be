@@ -2,6 +2,8 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { SocketIOAdapter } from './socket-io-adapter';
+import { AllExceptionsFilter } from './exception-filter';
 
 function setupDocs(app: INestApplication) {
   const config = new DocumentBuilder()
@@ -14,9 +16,7 @@ function setupDocs(app: INestApplication) {
 }
 
 function setupCors(app: INestApplication) {
-  app.enableCors({
-    origin: ['*'],
-  });
+  app.enableCors();
 }
 
 async function bootstrap() {
@@ -25,6 +25,17 @@ async function bootstrap() {
 
   setupCors(app);
   setupDocs(app);
+
+  app.useWebSocketAdapter(new SocketIOAdapter(app));
+  app.useGlobalFilters(new AllExceptionsFilter());
+
+  process.on('unhandledRejection', (reason, promise) => {
+    console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  });
+
+  process.on('uncaughtException', (error) => {
+    console.error('Uncaught Exception:', error);
+  });
 
   await app.listen(8000);
 }
