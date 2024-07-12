@@ -32,7 +32,21 @@ jobs:
         run: |
           docker push localhost:5000/handy-backend:latest
 
-      # - name: Deploy with Docker Compose
-      #   run: |
-      #     docker-compose down
-      #     docker-compose up -d
+      - name: Create .env file
+        run: |
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}\n" >> .env
+          echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}" >> .env
+
+      - name: Log in to Docker registry on runner
+        run: |
+          docker login localhost:5000 -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Pull Docker image on runner
+        run: |
+          docker pull localhost:5000/handy-backend:latest
+
+      - name: Run Docker container on runner
+        run: |
+          docker stop handy-be || true
+          docker rm handy-be || true
+          docker run -d --name handy-be -p 5000:5000 --env-file .env localhost:5000/handy-backend:latest
