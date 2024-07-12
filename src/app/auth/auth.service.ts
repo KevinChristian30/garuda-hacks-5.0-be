@@ -22,7 +22,7 @@ export class AuthService {
     private prisma: PrismaService,
     private userService: UserService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   async signUp(dto: AuthSignUpRequestDTO): Promise<void> {
     const user = await this.userService.findUserByUsername(dto.username);
@@ -95,4 +95,6 @@ export class AuthService {
       data,
     });
   }
+
+
 }

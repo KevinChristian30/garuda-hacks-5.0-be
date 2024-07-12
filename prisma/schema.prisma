@@ -14,6 +14,7 @@ model User {
   password         String?
   mmr              Int
   completeons      Completeon[]
+  profilePicture   String?
   gameParticipants GameParticipant[]
 
   @@map("users")

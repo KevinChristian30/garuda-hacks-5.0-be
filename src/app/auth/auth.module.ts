@@ -11,6 +11,6 @@ import { AuthGuard } from './auth.guard';
   imports: [PrismaModule, UserModule, JwtModule.register(jwtConfig)],
   controllers: [AuthController],
   providers: [AuthService, AuthGuard],
-  exports: [AuthGuard]
+  exports: [AuthGuard],
 })
 export class AuthModule {}

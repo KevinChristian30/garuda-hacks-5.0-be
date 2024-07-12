@@ -1,5 +1,3 @@
 export class GameFinishRequestDto {
-    constructor(
-        readonly gameId: string,
-    ) { }
+  constructor(readonly gameId: string) {}
 }

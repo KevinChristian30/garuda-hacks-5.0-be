@@ -11,6 +11,6 @@ import jwtConfig from 'src/config/jwtConfig';
   imports: [PrismaModule, AuthModule, JwtModule.register(jwtConfig)],
   controllers: [GameController],
   providers: [GameService, GameGateaway],
-  exports: [GameService]
+  exports: [GameService],
 })
 export class GameModule {}

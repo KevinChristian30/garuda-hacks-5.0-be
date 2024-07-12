@@ -1,11 +1,11 @@
 import {
-    Body,
-    Controller,
-    Get,
-    Param,
-    Post,
-    Request,
-    UseGuards,
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Request,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import UserMapper from '../user/mapper/user.mapper';
@@ -17,11 +17,14 @@ import { GameResponseDto } from './dtos/game-response.dto';
 @ApiBearerAuth()
 @Controller('games')
 export class GameController {
-    constructor(private gameService: GameService) { }
+  constructor(private gameService: GameService) {}
 
-    @Get(':id')
-    @UseGuards(AuthGuard)
-    get(@Param('id') id: string, @Request() request: any): Promise<GameResponseDto> {
-        return this.gameService.getGame(id);
-    }
+  @Get(':id')
+  @UseGuards(AuthGuard)
+  get(
+    @Param('id') id: string,
+    @Request() request: any,
+  ): Promise<GameResponseDto> {
+    return this.gameService.getGame(id);
+  }
 }

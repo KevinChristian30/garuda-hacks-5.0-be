@@ -1,6 +1,6 @@
 export function generateGuestRandomUsername(): string {
   return 'guest' + Math.floor(Math.random() * 9000000000) + 1000000000;
-};
+}
 
 export function generateRandomString(length: number) {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
