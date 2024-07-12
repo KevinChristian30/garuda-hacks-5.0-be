@@ -47,4 +47,4 @@ jobs:
 
       - name: Run Docker Compose
         run: |
-          docker compose restart -d
+          docker-compose restart -d
