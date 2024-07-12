@@ -23,7 +23,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build Docker image
+      - name: Build Docker image and give it tag
         run: |
           docker build -t handy-backend:latest .
           docker tag handy-backend:latest localhost:5000/handy-backend:latest
