@@ -49,4 +49,4 @@ jobs:
         run: |
           docker stop handy-be || true
           docker rm handy-be || true
-          docker run -d --name handy-be -p 5000:5000 --env-file .env localhost:5000/handy-backend:latest
+          docker run -d --name handy-be -p 8000:8000 --env-file .env localhost:5000/handy-backend:latest
