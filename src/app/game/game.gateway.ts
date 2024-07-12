@@ -86,7 +86,7 @@ export class GameGateaway
     await this.gameService.participantSuccess(
       client.userId,
       dto.gameId,
-      dto.index,
+      parseInt(dto.index.toString()),
     );
     client.to(dto.gameId).emit('another-participant-success', { index: dto.index });
   }
@@ -99,7 +99,7 @@ export class GameGateaway
     await this.gameService.participantSkip(
       client.userId,
       dto.gameId,
-      dto.index,
+      parseInt(dto.index.toString()),
     );
     client.to(dto.gameId).emit('another-participant-skip', { index: dto.index });
   }

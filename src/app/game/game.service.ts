@@ -14,8 +14,8 @@ export class GameService {
     return await this.prisma.game.create({
       data: {
         secureId: v4(),
-        expired: Date.now() + 2 * 60 * 1000,
-        question: generateRandomString(30),
+        expired: Date.now() + 1 * 60 * 1000,
+        question: generateRandomString(10),
         isMmrCalculated: false,
       },
     });
@@ -107,17 +107,26 @@ export class GameService {
         secureId: userSecureId,
       },
     });
-    return await this.prisma.gameParticipant.updateMany({
+    const gameParticipant = await this.prisma.gameParticipant.findFirst({
       where: {
         gameId: game.id,
         userId: user.id,
-      },
-      data: {
-        successes: {
-          push: index,
+      }
+    })
+
+    if (!gameParticipant.successes.includes(index) && !gameParticipant.skips.includes(index)) {
+      return await this.prisma.gameParticipant.updateMany({
+        where: {
+          gameId: game.id,
+          userId: user.id,
         },
-      },
-    });
+        data: {
+          successes: {
+            push: index,
+          },
+        },
+      });
+    }
   }
 
   async participantSkip(
@@ -136,17 +145,27 @@ export class GameService {
         secureId: userSecureId,
       },
     });
-    return await this.prisma.gameParticipant.updateMany({
+
+    const gameParticipant = await this.prisma.gameParticipant.findFirst({
       where: {
         gameId: game.id,
         userId: user.id,
-      },
-      data: {
-        skips: {
-          push: index,
+      }
+    })
+
+    if (!gameParticipant.successes.includes(index) && !gameParticipant.skips.includes(index)) {
+      return await this.prisma.gameParticipant.updateMany({
+        where: {
+          gameId: game.id,
+          userId: user.id,
         },
-      },
-    });
+        data: {
+          skips: {
+            push: index,
+          },
+        },
+      });
+    }
   }
 
   async finishGame(gameSecureId: string): Promise<void> {
@@ -163,36 +182,39 @@ export class GameService {
     });
 
     const gameParticipants: string[] = await this.prisma.$queryRaw`
-        SELECT "userId"
+        SELECT "userId", array_length("successes", 1) as "correctAmount"
         FROM "gameParticipants"
         WHERE "gameId" = ${game.id}
         ORDER BY array_length("successes", 1) DESC;
       `;
 
-    await this.prisma.user.update({
-      where: {
-        id: gameParticipants[0]['userId'],
-      },
-      data: {
-        mmr: {
-          increment: 25,
-        },
-      },
-    });
 
-    await this.prisma.user.update({
-      where: {
-        id: gameParticipants[1]['userId'],
-        mmr: {
-          gte: 25
-        }
-      },
-      data: {
-        mmr: {
-          decrement: 25,
+    if (gameParticipants[0]["correctAmount"] != gameParticipants[1]["correctAmound"]) {
+      await this.prisma.user.update({
+        where: {
+          id: gameParticipants[0]['userId'],
         },
-      },
-    });
+        data: {
+          mmr: {
+            increment: 25,
+          },
+        },
+      });
+
+      await this.prisma.user.update({
+        where: {
+          id: gameParticipants[1]['userId'],
+          mmr: {
+            gte: 25
+          }
+        },
+        data: {
+          mmr: {
+            decrement: 25,
+          },
+        },
+      });
+    }
   }
 
   async finishAllUnfinishedGame() {
@@ -209,7 +231,7 @@ export class GameService {
     });
   }
 
-  @Cron(CronExpression.EVERY_5_MINUTES)
+  @Cron(CronExpression.EVERY_MINUTE)
   finishGameScheduler() {
     this.finishAllUnfinishedGame();
     this.logger.debug('game finished');
