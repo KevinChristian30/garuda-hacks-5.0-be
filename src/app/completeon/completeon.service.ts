@@ -19,6 +19,17 @@ export class CompleteonService {
       },
     });
 
+    const completeon = await this.prisma.completeon.findFirst({
+      where: {
+        unitId: unit.id,
+        userId: user.id,
+      },
+    });
+
+    if (completeon) {
+      return;
+    }
+
     await this.prisma.completeon.create({
       data: {
         unit: {

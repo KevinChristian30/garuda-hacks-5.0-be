@@ -41,19 +41,12 @@ export class UnitService {
     });
 
     const lastIndex = unit.unitQuestionImages.length;
-    for (let i = 0; i <= 8; i += 2) {
+    for (let i = 0; i < 10; i++) {
       const unitQuestionImage = getRandomUnitQuestionImage();
       await this.unitQuestionImageService.create({
         questionAnswer: unitQuestionImage.character,
         questionImage: unitQuestionImage.imageUrl,
         questionOrder: lastIndex + i,
-        unitId,
-      });
-
-      const unitQuestionText = getRandomLetter();
-      await this.unitQuestionTextService.create({
-        questionOrder: lastIndex + i + 1,
-        questionText: unitQuestionText,
         unitId,
       });
     }
