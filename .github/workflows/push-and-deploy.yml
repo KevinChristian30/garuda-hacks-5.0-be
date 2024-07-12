@@ -25,7 +25,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} -t handy-backend:latest .
+          docker build -t handy-backend:latest .
           docker tag handy-backend:latest localhost:5000/handy-backend:latest
 
       - name: Push Docker image to local registry
