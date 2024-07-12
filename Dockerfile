@@ -19,6 +19,7 @@ WORKDIR /app
 
 # Copy the build output and node_modules from the build stage
 COPY --from=build /app/dist ./dist
+COPY --from=build /app /app
 COPY --from=build /app/node_modules ./node_modules
 
 # Expose the port the app runs on
