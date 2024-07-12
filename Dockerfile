@@ -9,6 +9,8 @@ COPY . .
 # Install dependencies
 RUN npm install
 
+RUN npx prisma db push
+
 # Build the NestJS application
 RUN npm run build
 
