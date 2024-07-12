@@ -26,13 +26,13 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -t handy-backend:latest .
-          docker tag your-image:latest localhost:5000/handy-backend:latest
+          docker tag handy-backend:latest localhost:5000/handy-backend:latest
 
       - name: Push Docker image to local registry
         run: |
           docker push localhost:5000/handy-backend:latest
 
-      - name: Deploy with Docker Compose
-        run: |
-          docker-compose down
-          docker-compose up -d
+      # - name: Deploy with Docker Compose
+      #   run: |
+      #     docker-compose down
+      #     docker-compose up -d
